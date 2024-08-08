@@ -1,13 +1,18 @@
-import './App.style.scss'
+import '@/styles/globals.scss';
+import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
+import { TopBar } from '@/components';
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
 export function App() {
-    const params = Object.entries({
-        cc_load_policy: 0,
-        controls: 2,
-        fs: 0,
-        rel: 0,
-        showinfo: 0
-    }).map(([key, value]) => `${key}=${value}`).join('&')
-
-    return <iframe src={'https://youtube.com/embed/BNflNL40T_M?' + params} />
+  return (
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <TopBar />
+    </ThemeProvider>
+  );
 }

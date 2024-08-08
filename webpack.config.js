@@ -28,7 +28,11 @@ module.exports = () => {
         resolve: {
             extensions: ['.js', '.jsx', '.ts', '.tsx', '.css', '.scss', '.sass'],
             fallback: { process: false },
-            modules: [__dirname, 'node_modules']
+            modules: [__dirname, 'node_modules'],
+            alias: {
+                '@': path.resolve(__dirname, 'src'),
+                '@mui/styled-engine': '@mui/styled-engine-sc',
+            }
         },
         devServer: {
             hot: true,
