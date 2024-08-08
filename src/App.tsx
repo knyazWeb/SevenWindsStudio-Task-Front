@@ -1,6 +1,12 @@
 import '@/styles/globals.scss';
-import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
-import { TopBar } from '@/components';
+import {
+  Box,
+  createTheme,
+  CssBaseline,
+  Grid,
+  ThemeProvider,
+} from '@mui/material';
+import { SideBar, TopBar } from '@/components';
 
 const darkTheme = createTheme({
   palette: {
@@ -11,8 +17,13 @@ const darkTheme = createTheme({
 export function App() {
   return (
     <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <TopBar />
+        <CssBaseline />
+        <TopBar />
+        <Grid container>
+          <Grid item>
+            <SideBar />
+          </Grid>
+        </Grid>
     </ThemeProvider>
   );
 }
