@@ -11,7 +11,7 @@ import {
   StyledListItemText,
 } from './SideBar.style';
 
-const menuItems = [
+const MENU_ITEMS = [
   'По проекту',
   'Объекты',
   'РД',
@@ -46,7 +46,7 @@ export default function SideBar() {
       </DrawerHeader>
       <Divider />
       <List>
-        {menuItems.map((text, index) => (
+        {MENU_ITEMS.map((text, index) => (
           <StyledListItem key={index} selected={text === 'СМР'}>
             <StyledListItemButton>
               <StyledListItemIcon>

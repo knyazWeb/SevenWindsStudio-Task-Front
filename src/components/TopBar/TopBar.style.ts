@@ -5,6 +5,7 @@ export const StyledAppBar = styled(AppBar)`
   background-color: ${COLORS.bgPrimary};
   background-image: none;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  height: 50px;
 `;
 
 export const StyledContainer = styled(Container)`
@@ -24,6 +25,7 @@ export const StyledTabs = styled(Tabs)`
 
 export const StyledTab = styled(Tab)`
   display: block;
+  color: ${COLORS.textSecondary};
   padding: 3px;
   width: fit-content;
   text-align: start;

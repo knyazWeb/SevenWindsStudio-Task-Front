@@ -1,6 +1,5 @@
 import { COLORS } from '@/styles';
-import { Card } from '@mui/material';
-import styled from 'styled-components';
+import { Card, styled } from '@mui/material';
 
 export const StyledCard = styled(Card)`
   background-color: ${COLORS.bgPrimary};

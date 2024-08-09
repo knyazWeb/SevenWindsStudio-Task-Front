@@ -1,8 +1,5 @@
 import { StyledCard, StyledCardHeader, StyledCardTitle } from './SectionCard.style';
-
-type SectionCardProps = {
-  title: string;
-};
+import { SectionCardProps } from './SectionCard.types';
 
 export default function SectionCard({ title }: SectionCardProps) {
   return (

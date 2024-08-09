@@ -11,6 +11,8 @@ import {
 import { COLORS } from '@/styles';
 
 export const StyledDrawer = styled(Drawer)`
+  height: 100%;
+  
   .MuiDrawer-paper {
     width: 300px;
     box-sizing: border-box;
@@ -28,7 +30,7 @@ export const DrawerHeader = styled(Box)`
 `;
 
 export const DrawerTypography = styled(Typography)`
-  color: rgba(255, 255, 255, 0.7);
+  color: ${COLORS.textSecondary};
 `;
 
 export const StyledListItemButton = styled(ListItemButton)`

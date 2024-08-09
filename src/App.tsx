@@ -1,6 +1,7 @@
 import '@/styles/globals.scss';
 import { createTheme, CssBaseline, Grid, ThemeProvider } from '@mui/material';
-import { SectionMenu, SideBar, TopBar } from '@/components';
+import { SectionMenu, SideBar, Table, TopBar } from '@/components';
+import { MainWrapper } from './components/MainWrapper';
 
 const darkTheme = createTheme({
   palette: {
@@ -13,14 +14,17 @@ export function App() {
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <TopBar />
-      <Grid container>
-        <Grid item xs={'auto'}>
-          <SideBar />
+      <MainWrapper>
+        <Grid container height="100%">
+          <Grid item xs="auto">
+            <SideBar />
+          </Grid>
+          <Grid item xs>
+            <SectionMenu />
+            <Table />
+          </Grid>
         </Grid>
-        <Grid item xs>
-          <SectionMenu />
-        </Grid>
-      </Grid>
+      </MainWrapper>
     </ThemeProvider>
   );
 }
