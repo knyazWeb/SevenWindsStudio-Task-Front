@@ -2,12 +2,10 @@ import {
   Paper,
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableRow,
 } from '@mui/material';
-import { formatNumberByDigits } from './DataTable.service';
-import { RowDataT } from './DataTable.type';
+
 import { StyledTableCell, StyledTableContainer } from './DataTable.style';
 import { Fragment, useCallback, useEffect, useState } from 'react';
 import {
@@ -16,39 +14,40 @@ import {
   useRemoveRowMutation,
   useUpdateRowMutation,
 } from '@/services';
+import { DataTableRow, RowDataT, RowSkeleton } from '..';
 
 // Will be stored in the store
-const ROWS_DATA: RowDataT[] = [
-  {
-    rowName: 'Work 1',
-    salary: 1000,
-    equipmentCosts: 500,
-    overheads: 200,
-    estimatedProfit: 300,
-    children: [
-      {
-        rowName: 'Work 2',
-        salary: 1500,
-        equipmentCosts: 800,
-        overheads: 300,
-        estimatedProfit: 500,
-        children: [
-          {
-            rowName: 'Work 3',
-            salary: 1200,
-            equipmentCosts: 600,
-            overheads: 250,
-            estimatedProfit: 400,
-            children: [],
-          },
-        ],
-      },
-    ],
-  },
-];
+//const ROWS_DATA: RowDataT[] = [
+//  {
+//    rowName: 'Work 1',
+//    salary: 1000,
+//    equipmentCosts: 500,
+//    overheads: 200,
+//    estimatedProfit: 300,
+//    children: [
+//      {
+//        rowName: 'Work 2',
+//        salary: 1500,
+//        equipmentCosts: 800,
+//        overheads: 300,
+//        estimatedProfit: 500,
+//        children: [
+//          {
+//            rowName: 'Work 3',
+//            salary: 1200,
+//            equipmentCosts: 600,
+//            overheads: 250,
+//            estimatedProfit: 400,
+//            children: [],
+//          },
+//        ],
+//      },
+//    ],
+//  },
+//];
 
 export default function DataTable() {
-  const { data } = useGetRowsQuery();
+  const { data, isLoading, isSuccess } = useGetRowsQuery();
   console.log(data);
   const [removeRow] = useRemoveRowMutation();
   //const [updateRow] = useUpdateRowMutation();
@@ -125,24 +124,7 @@ export default function DataTable() {
   const renderRow = useCallback(
     (rowData: RowDataT, level: number = 1) => (
       <Fragment key={rowData.rowName}>
-        <TableRow>
-          <TableCell align="left" style={{ paddingLeft: `${level * 16}px` }}>
-            {level}
-          </TableCell>
-          <TableCell align="left">{rowData.rowName}</TableCell>
-          <TableCell align="left">
-            {formatNumberByDigits(rowData.salary)}
-          </TableCell>
-          <TableCell align="left">
-            {formatNumberByDigits(rowData.equipmentCosts)}
-          </TableCell>
-          <TableCell align="left">
-            {formatNumberByDigits(rowData.overheads)}
-          </TableCell>
-          <TableCell align="left">
-            {formatNumberByDigits(rowData.estimatedProfit)}
-          </TableCell>
-        </TableRow>
+        <DataTableRow rowData={rowData} level={level} />
         {rowData.children?.length > 0 &&
           rowData.children.map((childRow) => renderRow(childRow, level + 1))}
       </Fragment>
@@ -163,7 +145,10 @@ export default function DataTable() {
             <StyledTableCell align="left">Сметная прибыль</StyledTableCell>
           </TableRow>
         </TableHead>
-        <TableBody>{ROWS_DATA.map((rowData) => renderRow(rowData))}</TableBody>
+        <TableBody>
+          {/*{ROWS_DATA.map((rowData) => renderRow(rowData))}*/}
+          {isLoading && <RowSkeleton />}
+        </TableBody>
       </Table>
     </StyledTableContainer>
   );

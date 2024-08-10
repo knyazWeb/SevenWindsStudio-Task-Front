@@ -1,3 +1,5 @@
+
+
 export type RowDataT = {
   rowName: string;
   salary: number;
@@ -5,4 +7,9 @@ export type RowDataT = {
   overheads: number;
   estimatedProfit: number;
   children: RowDataT[];
+};
+
+export type DataTableRowProps = {
+  rowData: RowDataT;
+  level: number;
 };
