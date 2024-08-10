@@ -1,4 +1,3 @@
-import { COLORS } from '@/styles';
 import {
   Paper,
   Table,
@@ -10,29 +9,35 @@ import {
 import { formatNumberByDigits } from './DataTable.service';
 import { RowDataT } from './DataTable.type';
 import { StyledTableCell, StyledTableContainer } from './DataTable.style';
-import { Fragment, useCallback, useState } from 'react';
+import { Fragment, useCallback, useEffect, useState } from 'react';
+import {
+  useCreateRowMutation,
+  useGetRowsQuery,
+  useRemoveRowMutation,
+  useUpdateRowMutation,
+} from '@/services';
 
 // Will be stored in the store
 const ROWS_DATA: RowDataT[] = [
   {
-    workName: 'Work 1',
-    basicSalary: 1000,
-    equipment: 500,
-    expenses: 200,
+    rowName: 'Work 1',
+    salary: 1000,
+    equipmentCosts: 500,
+    overheads: 200,
     estimatedProfit: 300,
     children: [
       {
-        workName: 'Work 2',
-        basicSalary: 1500,
-        equipment: 800,
-        expenses: 300,
+        rowName: 'Work 2',
+        salary: 1500,
+        equipmentCosts: 800,
+        overheads: 300,
         estimatedProfit: 500,
         children: [
           {
-            workName: 'Work 3',
-            basicSalary: 1200,
-            equipment: 600,
-            expenses: 250,
+            rowName: 'Work 3',
+            salary: 1200,
+            equipmentCosts: 600,
+            overheads: 250,
             estimatedProfit: 400,
             children: [],
           },
@@ -43,23 +48,96 @@ const ROWS_DATA: RowDataT[] = [
 ];
 
 export default function DataTable() {
-  
+  const { data } = useGetRowsQuery();
+  console.log(data);
+  const [removeRow] = useRemoveRowMutation();
+  //const [updateRow] = useUpdateRowMutation();
+  //const [createRow, { isLoading, isSuccess, isError }] = useCreateRowMutation();
+  //useEffect(() => {
+  //  const createNewRow = async () => {
+  //    try {
+  //      const response = await createRow({
+  //        rowName: 'Test row 123',
+  //        salary: 300,
+  //        equipmentCosts: 300,
+  //        overheads: 300,
+  //        estimatedProfit: 300,
+  //        parentId: null,
+  //        machineOperatorSalary: 0,
+  //        mainCosts: 0,
+  //        materials: 0,
+  //        mimExploitation: 0,
+  //        supportCosts: 0,
+  //      }).unwrap();
+  //      console.log('Response data:', response);
+  //      // Обработка данных ответа
+  //    } catch (error) {
+  //      console.error('Failed to create row:', error);
+  //      // Обработка ошибки
+  //    }
+  //  };
+  //useEffect(() => {
+  //  const updateRowS = async () => {
+  //    try {
+  //      const response = await updateRow({
+  //        body: {
+  //          rowName: 'Test row 123 345',
+  //          salary: 300,
+  //          equipmentCosts: 300,
+  //          overheads: 300,
+  //          estimatedProfit: 300,
+  //          machineOperatorSalary: 0,
+  //          mainCosts: 0,
+  //          materials: 0,
+  //          mimExploitation: 0,
+  //          supportCosts: 0,
+  //        },
+  //        rowID: 102683,
+  //      }).unwrap();
+  //      console.log('Response data:', response);
+  //      // Обработка данных ответа
+  //    } catch (error) {
+  //      console.error('Failed to create row:', error);
+  //      // Обработка ошибки
+  //    }
+  //  };
+
+  //  updateRowS();
+  //}, []);
+  //useEffect(() => {
+  //  const removeRowS = async () => {
+  //    try {
+  //      const response = await removeRow({
+  //        rowID: 102684,
+  //      }).unwrap();
+  //      console.log('Response data:', response);
+  //      // Обработка данных ответа
+  //    } catch (error) {
+  //      console.error('Failed to create row:', error);
+  //      // Обработка ошибки
+  //    }
+  //  };
+
+  //  removeRowS()
+
+  //}, [])
+
   const renderRow = useCallback(
     (rowData: RowDataT, level: number = 1) => (
-      <Fragment key={rowData.workName}>
+      <Fragment key={rowData.rowName}>
         <TableRow>
           <TableCell align="left" style={{ paddingLeft: `${level * 16}px` }}>
             {level}
           </TableCell>
-          <TableCell align="left">{rowData.workName}</TableCell>
+          <TableCell align="left">{rowData.rowName}</TableCell>
           <TableCell align="left">
-            {formatNumberByDigits(rowData.basicSalary)}
+            {formatNumberByDigits(rowData.salary)}
           </TableCell>
           <TableCell align="left">
-            {formatNumberByDigits(rowData.equipment)}
+            {formatNumberByDigits(rowData.equipmentCosts)}
           </TableCell>
           <TableCell align="left">
-            {formatNumberByDigits(rowData.expenses)}
+            {formatNumberByDigits(rowData.overheads)}
           </TableCell>
           <TableCell align="left">
             {formatNumberByDigits(rowData.estimatedProfit)}

@@ -1,7 +1,9 @@
+import { SectionMenu, SideBar, Table, TopBar } from '@/components';
 import '@/styles/globals.scss';
 import { createTheme, CssBaseline, Grid, ThemeProvider } from '@mui/material';
-import { SectionMenu, SideBar, Table, TopBar } from '@/components';
+import { Provider } from 'react-redux';
 import { MainWrapper } from './components/MainWrapper';
+import { store } from './store';
 
 const darkTheme = createTheme({
   palette: {
@@ -11,20 +13,22 @@ const darkTheme = createTheme({
 
 export function App() {
   return (
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <TopBar />
-      <MainWrapper>
-        <Grid container height="100%">
-          <Grid item xs="auto">
-            <SideBar />
+    <Provider store={store}>
+      <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
+        <TopBar />
+        <MainWrapper>
+          <Grid container height="100%">
+            <Grid item xs="auto">
+              <SideBar />
+            </Grid>
+            <Grid item xs>
+              <SectionMenu />
+              <Table />
+            </Grid>
           </Grid>
-          <Grid item xs>
-            <SectionMenu />
-            <Table />
-          </Grid>
-        </Grid>
-      </MainWrapper>
-    </ThemeProvider>
+        </MainWrapper>
+      </ThemeProvider>
+    </Provider>
   );
 }

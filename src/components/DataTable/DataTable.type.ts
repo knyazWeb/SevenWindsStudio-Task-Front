@@ -1,8 +1,8 @@
 export type RowDataT = {
-  workName: string;
-  basicSalary: number;
-  equipment: number;
-  expenses: number;
+  rowName: string;
+  salary: number;
+  equipmentCosts: number;
+  overheads: number;
   estimatedProfit: number;
   children: RowDataT[];
 };
