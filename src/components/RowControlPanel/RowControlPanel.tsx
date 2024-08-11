@@ -1,7 +1,7 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import DescriptionIcon from '@mui/icons-material/Description';
 import css from './RowControlPanel.module.scss';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { RowControlPanelProps } from './RowControlPanel.types';
 import { useRemoveRowMutation } from '@/services';
 import { useAppDispatch } from '@/hooks';
@@ -16,12 +16,12 @@ export default function RowControlPanel({
   const [removeRow] = useRemoveRowMutation();
   const dispatch = useAppDispatch();
 
-  const deleteRow = async () => {
+  const deleteRow = useCallback(async () => {
     if (rowID) {
       const removeResponse = await removeRow({ rowID });
       dispatch(removeStoredRow({ rowID }));
     }
-  };
+  }, [rowID, removeRow, dispatch]);
 
   return (
     <div
