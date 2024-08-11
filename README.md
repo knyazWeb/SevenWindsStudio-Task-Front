@@ -7,7 +7,7 @@
 
 ## Инструкция для развёртывания
 
-Проект был создан с помощью web tamplate by [rikzun](https://github.com/rikzun/web-template)
+Проект был создан с помощью web template by [rikzun](https://github.com/rikzun/web-template)
 
 Запуск приложения:
 ```bash
