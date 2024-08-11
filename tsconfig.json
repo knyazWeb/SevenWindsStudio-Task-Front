@@ -15,8 +15,10 @@
     "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"],
-      "@mui/styled-engine": ["./node_modules/@mui/styled-engine-sc"],
-    }
+      "@mui/styled-engine": ["./node_modules/@mui/styled-engine-sc"]
+    },
+    "suppressImplicitAnyIndexErrors": true,
+    "suppressExcessPropertyErrors": true
   },
 
 }

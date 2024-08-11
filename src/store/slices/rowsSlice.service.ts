@@ -3,16 +3,13 @@ import { NewRowT } from './rowsSlice.types';
 
 export function removeRowById(rows: RowDataT[], rowID: number): RowDataT[] {
   return rows
+    .filter((row) => row.id !== rowID)
     .map((row) => {
-      if (row.id === rowID) {
-        return null;
-      }
       if (row.child) {
         row.child = removeRowById(row.child, rowID);
       }
       return row;
-    })
-    .filter((row) => row !== null);
+    });
 }
 
 export function createRowByParentID(
