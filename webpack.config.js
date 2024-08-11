@@ -17,7 +17,7 @@ const PATH_OUTPUT_FOLDER = path.join(__dirname, 'build')
 
 module.exports = () => {
     const config = {
-        mode: IS_DEVELOPMENT ? 'development' : 'production',
+        mode: 'production',
         devtool: IS_DEVELOPMENT ? 'source-map' : undefined,
         entry: PATH_ENTRY,
         output: {
