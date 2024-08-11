@@ -1,135 +1,52 @@
-import {
-  Paper,
-  Table,
-  TableBody,
-  TableHead,
-  TableRow,
-} from '@mui/material';
-
+import { Paper, Table, TableBody, TableHead, TableRow } from '@mui/material';
 import { StyledTableCell, StyledTableContainer } from './DataTable.style';
-import { Fragment, useCallback, useEffect, useState } from 'react';
-import {
-  useCreateRowMutation,
-  useGetRowsQuery,
-  useRemoveRowMutation,
-  useUpdateRowMutation,
-} from '@/services';
-import { DataTableRow, RowDataT, RowSkeleton } from '..';
-
-// Will be stored in the store
-//const ROWS_DATA: RowDataT[] = [
-//  {
-//    rowName: 'Work 1',
-//    salary: 1000,
-//    equipmentCosts: 500,
-//    overheads: 200,
-//    estimatedProfit: 300,
-//    children: [
-//      {
-//        rowName: 'Work 2',
-//        salary: 1500,
-//        equipmentCosts: 800,
-//        overheads: 300,
-//        estimatedProfit: 500,
-//        children: [
-//          {
-//            rowName: 'Work 3',
-//            salary: 1200,
-//            equipmentCosts: 600,
-//            overheads: 250,
-//            estimatedProfit: 400,
-//            children: [],
-//          },
-//        ],
-//      },
-//    ],
-//  },
-//];
+import { Fragment, useCallback, useState } from 'react';
+import { useGetRowsQuery } from '@/services';
+import { DataTableRow, RowDataT, RowInput, RowSkeleton } from '..';
+import { useAppSelector } from '@/hooks';
+import { RowEdit } from '../RowEdit';
 
 export default function DataTable() {
-  const { data, isLoading, isSuccess } = useGetRowsQuery();
-  console.log(data);
-  const [removeRow] = useRemoveRowMutation();
-  //const [updateRow] = useUpdateRowMutation();
-  //const [createRow, { isLoading, isSuccess, isError }] = useCreateRowMutation();
-  //useEffect(() => {
-  //  const createNewRow = async () => {
-  //    try {
-  //      const response = await createRow({
-  //        rowName: 'Test row 123',
-  //        salary: 300,
-  //        equipmentCosts: 300,
-  //        overheads: 300,
-  //        estimatedProfit: 300,
-  //        parentId: null,
-  //        machineOperatorSalary: 0,
-  //        mainCosts: 0,
-  //        materials: 0,
-  //        mimExploitation: 0,
-  //        supportCosts: 0,
-  //      }).unwrap();
-  //      console.log('Response data:', response);
-  //      // Обработка данных ответа
-  //    } catch (error) {
-  //      console.error('Failed to create row:', error);
-  //      // Обработка ошибки
-  //    }
-  //  };
-  //useEffect(() => {
-  //  const updateRowS = async () => {
-  //    try {
-  //      const response = await updateRow({
-  //        body: {
-  //          rowName: 'Test row 123 345',
-  //          salary: 300,
-  //          equipmentCosts: 300,
-  //          overheads: 300,
-  //          estimatedProfit: 300,
-  //          machineOperatorSalary: 0,
-  //          mainCosts: 0,
-  //          materials: 0,
-  //          mimExploitation: 0,
-  //          supportCosts: 0,
-  //        },
-  //        rowID: 102683,
-  //      }).unwrap();
-  //      console.log('Response data:', response);
-  //      // Обработка данных ответа
-  //    } catch (error) {
-  //      console.error('Failed to create row:', error);
-  //      // Обработка ошибки
-  //    }
-  //  };
+  
+  // RTK is caching this rows
+  const { isLoading } = useGetRowsQuery();
+  const ALL_ROWS = useAppSelector((state) => state.rows);
+  console.log(ALL_ROWS);
 
-  //  updateRowS();
-  //}, []);
-  //useEffect(() => {
-  //  const removeRowS = async () => {
-  //    try {
-  //      const response = await removeRow({
-  //        rowID: 102684,
-  //      }).unwrap();
-  //      console.log('Response data:', response);
-  //      // Обработка данных ответа
-  //    } catch (error) {
-  //      console.error('Failed to create row:', error);
-  //      // Обработка ошибки
-  //    }
-  //  };
-
-  //  removeRowS()
-
-  //}, [])
+  const [activeInputRowParentID, setActiveInputRowParentID] = useState<
+    number | null
+  >(null);
+  const [activeEditRowID, setActiveEditRowID] = useState<number | null>(null);
 
   const renderRow = useCallback(
     (rowData: RowDataT, level: number = 1) => (
-      <Fragment key={rowData.rowName}>
-        <DataTableRow rowData={rowData} level={level} />
-        {rowData.children?.length > 0 &&
-          rowData.children.map((childRow) => renderRow(childRow, level + 1))}
+      <Fragment key={rowData.id}>
+        {activeEditRowID === rowData.id ? (
+          <RowEdit
+            setActiveEditRowID={setActiveEditRowID}
+            rowData={rowData}
+            level={level}
+          />
+        ) : (
+          <DataTableRow
+            setActiveEditRowID={setActiveEditRowID}
+            setActiveInputRowParentID={setActiveInputRowParentID}
+            rowData={rowData}
+            level={level}
+          />
+        )}
+        {rowData.child?.length > 0 &&
+          rowData.child.map((childRow) => renderRow(childRow, level + 1))}
+        {activeInputRowParentID === rowData.id && (
+          <RowInput
+            setActiveInputRowParentID={setActiveInputRowParentID}
+            parentID={activeInputRowParentID}
+            level={level + 1}
+          />
+        )}
       </Fragment>
     ),
-    []
+    [activeInputRowParentID, activeEditRowID]
   );
 
   return (
@@ -146,8 +63,10 @@ export default function DataTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {/*{ROWS_DATA.map((rowData) => renderRow(rowData))}*/}
-          {isLoading && <RowSkeleton />}
+          {(isLoading && <RowSkeleton />) ||
+            (ALL_ROWS?.length && ALL_ROWS.map((row) => renderRow(row))) || (
+              <RowInput parentID={null} level={1} />
+            )}
         </TableBody>
       </Table>
     </StyledTableContainer>

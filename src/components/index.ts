@@ -5,3 +5,5 @@ export * from './SectionMenu';
 export * from './DataTable';
 export * from './DataTableRow';
 export * from './RowSkeleton';
+export * from './RowInput';
+export * from './RowControlPanel';

@@ -12,7 +12,7 @@ import { COLORS } from '@/styles';
 
 export const StyledDrawer = styled(Drawer)`
   height: 100%;
-  
+
   .MuiDrawer-paper {
     width: 300px;
     box-sizing: border-box;

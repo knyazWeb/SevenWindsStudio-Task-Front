@@ -1,4 +1,8 @@
-import { StyledCard, StyledCardHeader, StyledCardTitle } from './SectionCard.style';
+import {
+  StyledCard,
+  StyledCardHeader,
+  StyledCardTitle,
+} from './SectionCard.style';
 import { SectionCardProps } from './SectionCard.types';
 
 export default function SectionCard({ title }: SectionCardProps) {

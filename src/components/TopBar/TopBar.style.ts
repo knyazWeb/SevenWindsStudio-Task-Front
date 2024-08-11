@@ -13,7 +13,6 @@ export const StyledContainer = styled(Container)`
   padding-right: 16px;
 `;
 
-
 export const StyledTabs = styled(Tabs)`
   .MuiTabs-flexContainer {
     gap: 30px;

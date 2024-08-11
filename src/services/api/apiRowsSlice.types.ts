@@ -40,8 +40,20 @@ export type CreateRowRequestT = {
 };
 
 export type CreateRowResponseT = {
-  // types changed array
-  changed: any[];
+  changed: {
+    id: number;
+    rowName: string;
+    salary: number;
+    equipmentCosts: number;
+    overheads: number;
+    estimatedProfit: number;
+    machineOperatorSalary: number;
+    mainCosts: number;
+    materials: number;
+    mimExploitation: number;
+    supportCosts: number;
+    total: number;
+  }[];
   current: {
     id: number;
     rowName: string;
@@ -73,5 +85,3 @@ export type UpdateRowRequestT = {
   mimExploitation: number;
   supportCosts: number;
 };
-
-

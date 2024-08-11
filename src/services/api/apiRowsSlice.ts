@@ -5,7 +5,7 @@ import {
   EntityResponseT,
   ListResponseT,
   UpdateRowRequestT,
-} from './apiRowsSlice.type';
+} from './apiRowsSlice.types';
 
 export const apiRowsSlice = createApi({
   reducerPath: 'rowsApi',
@@ -13,6 +13,7 @@ export const apiRowsSlice = createApi({
     baseUrl: `${process.env.REACT_APP_SERVER_URL}/v1/outlay-rows/entity/${process.env.REACT_APP_EID}/row`,
   }),
   endpoints: (builder) => ({
+    
     // Unused endpoint
     createEntity: builder.mutation<EntityResponseT, void>({
       query: () => ({
@@ -20,12 +21,14 @@ export const apiRowsSlice = createApi({
         method: 'POST',
       }),
     }),
+    
     getRows: builder.query<ListResponseT[], void>({
       query: () => ({
         url: '/list',
         method: 'GET',
       }),
     }),
+    
     createRow: builder.mutation<CreateRowResponseT, CreateRowRequestT>({
       query: (body) => ({
         url: '/create',
@@ -33,6 +36,7 @@ export const apiRowsSlice = createApi({
         body,
       }),
     }),
+    
     updateRow: builder.mutation<
       CreateRowResponseT,
       { body: UpdateRowRequestT; rowID: number }
@@ -43,7 +47,8 @@ export const apiRowsSlice = createApi({
         body,
       }),
     }),
-    removeRow: builder.mutation<void, {rowID: number}>({
+    
+    removeRow: builder.mutation<void, { rowID: number }>({
       query: ({ rowID }) => ({
         url: `/${rowID}/delete`,
         method: 'DELETE',
@@ -57,5 +62,5 @@ export const {
   useGetRowsQuery,
   useCreateRowMutation,
   useUpdateRowMutation,
-  useRemoveRowMutation
+  useRemoveRowMutation,
 } = apiRowsSlice;

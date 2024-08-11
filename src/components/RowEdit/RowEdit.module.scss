@@ -1,0 +1,26 @@
+.node {
+  position: relative;
+  z-index: 0;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 19px;
+    transform: translateY(50%);
+    left: 8px;
+    width: 10px;
+    height: 2px;
+    background-color: #c6c6c6;
+    z-index: -1;
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -22px;
+    transform: translate(0, 0);
+    left: 8px;
+    width: 2px;
+    height: 72px;
+    background-color: #c6c6c6;
+    z-index: -1;
+  }
+}

@@ -1,5 +1,4 @@
 import { SectionMenu, SideBar, Table, TopBar } from '@/components';
-import '@/styles/globals.scss';
 import { createTheme, CssBaseline, Grid, ThemeProvider } from '@mui/material';
 import { Provider } from 'react-redux';
 import { MainWrapper } from './components/MainWrapper';
