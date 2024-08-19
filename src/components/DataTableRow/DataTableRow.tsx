@@ -10,7 +10,6 @@ export default function DataTableRow({
   setActiveInputRowParentID,
   setActiveEditRowID,
 }: DataTableRowProps) {
-  
   return (
     <TableRow onDoubleClick={() => setActiveEditRowID(rowData.id)}>
       <TableCell

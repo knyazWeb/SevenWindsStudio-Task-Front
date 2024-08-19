@@ -12,7 +12,7 @@ export default function DataTable() {
   const { isLoading } = useGetRowsQuery();
   const ALL_ROWS = useAppSelector((state) => state.rows);
   console.log(ALL_ROWS);
-
+  
   const [activeInputRowParentID, setActiveInputRowParentID] = useState<
     number | null
   >(null);
